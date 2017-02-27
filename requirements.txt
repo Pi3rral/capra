@@ -1,0 +1,10 @@
+Django
+psycopg2
+markdown
+arrow
+djangorestframework
+django-filter
+django_chartit
+django-crispy-forms
+plotly
+numpy

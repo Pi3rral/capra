@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.4
+    ports:
+    - "5432:5432"
+    volumes:
+    - djangodb:/var/lib/postgresql/data
+  capra:
+    image: pi3rral/capra
+    volumes:
+    - .:/capra
+    ports:
+    - "80:80"
+    depends_on:
+    - db
+
+volumes:
+  djangodb:
