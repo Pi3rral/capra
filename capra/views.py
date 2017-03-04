@@ -19,7 +19,7 @@ def get_graph(measures, subm, title, color='red'):
     v = [getattr(m, subm) for m in measures]
 
     # calculate polynomial
-    z = np.polyfit(x_ts, v, 5)
+    z = np.polyfit(x_ts, v, 4)
     f = np.poly1d(z)
 
     # calculate new x's and y's
