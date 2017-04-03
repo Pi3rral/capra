@@ -33,3 +33,11 @@ class TemperatureViewSet(viewsets.ModelViewSet):
     queryset = Temperature.objects.all()
     serializer_class = TemperatureSerializer
     filter_fields = ('element__name',)
+
+    def perform_create(self, serializer):
+        last = Temperature.objects.filter(
+            element__name=serializer.validated_data['element'].name
+        ).latest('measured_at')
+        if not last \
+                or last.temperature != serializer.validated_data['temperature']:
+            serializer.save()

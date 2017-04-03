@@ -41,6 +41,17 @@ class MeasureViewSet(viewsets.ModelViewSet):
             )
         return filtered_query_set
 
+    def perform_create(self, serializer):
+        last = Measure.objects.filter(
+            location__name=serializer.validated_data['location'].name
+        ).latest('measured_at')
+        if not last \
+                or last.temperature != \
+                        serializer.validated_data['temperature'] \
+                or last.humidity != \
+                        serializer.validated_data['humidity']:
+            serializer.save()
+
     def create(self, request, *args, **kwargs):
         params = self.request.query_params
         request_data = {k: v[0] for k,v in dict(params).items()}
